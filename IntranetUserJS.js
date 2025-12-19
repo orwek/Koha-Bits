@@ -41,7 +41,9 @@ $(document).ready(function(){
 		  let d = new Date();
 		  let m = d.getMonth();    
 		  app.get(tmp_id2).innerHTML =  tmp_i + "<br /><br />" + msg_array[m];
-
+  }
+});
+	  
 // Copy phone number to SMS field for initial patron entry
 $(document).ready(function(){
    if (location.href.indexOf("memberentry.pl?op=add") != -1){
