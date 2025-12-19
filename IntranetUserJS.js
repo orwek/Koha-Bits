@@ -17,6 +17,31 @@ $(document).ready(function(){
    }
  }
 });
+
+// Add message to Check-out Screen for Staff reminders, appears under the barcode box.
+// You can also customize the color for each message.
+$(document).ready(function(){
+  if (location.href.indexOf("circulation.pl") != -1) {
+		  let msg_array = [
+			  "<p style='color:blue;'><b>January Message!</b></p>", // January
+			  "<p style='color:darkgreen;'><b>February Message!</b></p>", // February
+			  "<p style='color:#c00;'><b>March Message!</p>", // March
+			  "<p style='color:orange;'><b>April Message!</b></p>", // April
+			  "<p style='color:#8B4513;'><b>May Message!</b></p>", // May
+			  "<p style='color:teal;'><b>June Message!</b></p>", // June
+			  "<p style='color:darkolivegreen;'><b>July Message!</b></p>", // July
+			  "<p style='color:firebrick;'><b>August Message!</b></p>", // August
+			  "<p style='color:goldenrod;'><b>September Message!</b></p>", // September
+			  "<p style='color:darkorange;'><b>October Message!</b></p>", // October
+			  "<p style='color:sienna;'><b>November Message!</b></p>", // November
+			  "<p style='color:chocolate;'><b>December Message!</b></p>" // December
+		  ];
+		  let tmp_id2="circ_circulation_issue";
+		  let tmp_i = app.get(tmp_id2).innerHTML;
+		  let d = new Date();
+		  let m = d.getMonth();    
+		  app.get(tmp_id2).innerHTML =  tmp_i + "<br /><br />" + msg_array[m];
+
 // Copy phone number to SMS field for initial patron entry
 $(document).ready(function(){
    if (location.href.indexOf("memberentry.pl?op=add") != -1){
