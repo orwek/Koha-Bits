@@ -6,8 +6,6 @@ Copy the snippet you want into the system preference it is listed under.
 
 Everything here currently works on Koha 25.05.05
 
-# Current Listing
-
 ## IntranetUserJS
 - **Check-in Count:** adds a count to the check-in screen
 - **Highlight NEW:** highlights "NEW" and "New" items on the check-in screen
