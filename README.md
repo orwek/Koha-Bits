@@ -8,7 +8,7 @@ Everything here currently works on Koha 25.05.05
 # Current Listing
 
 ## IntranetUserJS
-- Check-in Count: adds a count to the check-in screen
-- Phone to SMS: copies the phone number down to the SMS field for initial patron entry
-- HTML/Text toggle: adds buttons to the Pages module to swap between the HTML and WYSIWYG editor
-- Faster Fast Catalog: Inserts the default entries for books on the "FA" Fast Catalog template and puts the cursor in the title field
+- **Check-in Count:** adds a count to the check-in screen
+- **Phone to SMS:** copies the phone number down to the SMS field for initial patron entry
+- **HTML/Text toggle:** adds buttons to the Pages module to swap between the HTML and WYSIWYG editor
+- **Faster Fast Catalog:** Inserts the default entries for books on the "FA" Fast Catalog template and puts the cursor in the title field
