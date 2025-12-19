@@ -3,6 +3,7 @@ Shareable code snippets for Koha LMS
 
 Each code snippet is set up to load only on the page it is meant to be used on.
 Copy the snippet you want into the system preference it is listed under.
+
 Everything here currently works on Koha 25.05.05
 
 # Current Listing
