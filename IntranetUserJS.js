@@ -6,6 +6,17 @@ $(document).ready(function(){
    }
 });
 
+// Highlight NEW items on the check-in screen
+$(document).ready(function(){
+ if (location.href.indexOf("returns.pl") != -1) {
+   let tmp_item = $(".ci-itemtype");
+   for(const check2 of tmp_item) {
+      if (check2.innerHTML.includes("New") || check2.innerHTML.includes("NEW")) {
+         	check2.style="background-color: #fff82b;"    
+       }
+   }
+ }
+});
 // Copy phone number to SMS field for initial patron entry
 $(document).ready(function(){
    if (location.href.indexOf("memberentry.pl?op=add") != -1){
