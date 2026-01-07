@@ -73,3 +73,10 @@ $(document).ready(function(){
        $("[id^='tag_245_subfield_a']").focus();
   }
 });
+
+// fix Holds Ignore bug
+$(document).ready(function(){
+  if (location.href.indexOf("returns.pl") != -1) {
+      document.getElementsByClassName("deny")[0].type = "button";
+  }
+});
