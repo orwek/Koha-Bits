@@ -7,9 +7,10 @@ Copy the snippet you want into the system preference it is listed under.
 Everything here currently works on Koha 25.05.05
 
 ## Batch Attach Items
-A simple tool using a page and a snippet that allows you to batch attach items to a bib record
+A simple tool using a page and a snippet that allows you to batch attach items to a bib record.
 
 ## IntranetUserJS
+You can copy and paste each of these snippets individually into your IntranetUserJS system preference to add functionality.
 - **Check-in Count:** adds a count to the check-in screen
 - **Highlight NEW:** highlights "NEW" and "New" items on the check-in screen
 - **Staff Check-out Message:** adds a message under the barcode box on the check-out screen to remind staff about "up sells" based on the month.
