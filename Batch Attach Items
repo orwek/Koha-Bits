@@ -119,6 +119,7 @@ $(document).ready(function () {
 			let tmp = document.getElementsByClassName("action")[0].innerHTML;
 			 console.log(tmp);
 			let bib = location.href.split("biblionumber=")[1];
+			bib = bib.split("&")[0];
 			let batch = " <a href='/cgi-bin/koha/tools/page.pl?page_id={{page id here}}&bib_id=" + bib + "'> (Batch attach) </a>";
 			document.getElementsByClassName("action")[0].innerHTML = tmp + batch; 
 			console.log(tmp);
