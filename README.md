@@ -13,3 +13,5 @@ Everything here currently works on Koha 25.05.05
 - **Phone to SMS:** copies the phone number down to the SMS field for initial patron entry
 - **HTML/Text toggle:** adds buttons to the Pages module to swap between the HTML and WYSIWYG editor
 - **Faster Fast Catalog:** Inserts the default entries for books on the "FA" Fast Catalog template and puts the cursor in the title field
+- **Holds Ignore Bug** Occassionally the Ignore button on the Holds Dialoge won't let you ignore, this fixes it.
+- **Koha Offline Library Tool Link** Adds a link to my one page offline library tool to the footer with the other offline tools.
