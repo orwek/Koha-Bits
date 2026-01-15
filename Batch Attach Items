@@ -1,0 +1,126 @@
+// This is a two parter. 
+// #1- Pages tool. You need to create a page with the following code:
+
+<!--
+Batch Attach Module (BAM)
+Written by Kendall Purser
+For BCLD.org
+Jan 2026
+-->
+
+<b>Biblio ID:</b> <a id="return_link" href="/cgi-bin/koha/catalogue/detail.pl?biblionumber=">Return</a><br />
+<input type="text" id="bam_bib" /><br /><br />
+<b>Barcodes:</b><br />
+<textarea id="bam_bar" style="height: 200px;"></textarea><br /><br />
+<button onclick="bam.attach2();">Add barcodes</button> (Don't forget to delete empty bib records as needed!)<br /><br />
+<div id="bam_rep" style="background: #e7e7e7; width: 190px; height: 100px; overflow-y: scroll;"></div>
+
+<script>
+  const bam = { 
+	get: function (tmp_id) {
+    	return document.getElementById(tmp_id); 
+   	},
+  	init: function () {
+		// get biblio id from url if available if not put cursor in bibid field
+		if (location.href.indexOf("bib_id=") != -1) {
+			let tmp_bib = location.href;
+			tmp_bib = tmp_bib.split("bib_id=")[1];
+			bam.get("bam_bib").value = tmp_bib;
+			bam.get("bam_bar").focus();
+			bam.get("return_link").href=bam.get("return_link")+tmp_bib;
+		} else {
+			bam.get("bam_bib").focus();
+		}
+  	},
+  	bib_id: 0,
+  	barcodes: [],
+  	csrf: "",
+	attach: function () {
+		bam.csrf = $('meta[name="csrf-token"]').attr('content');
+		bam.barcodes = bam.get("bam_bar").value.split("\n");
+		bam.bib_id = bam.get("bam_bib").value;
+		let tmp_url = "/cgi-bin/koha/cataloguing/moveitem.pl?biblionumber=" + bam.bib_id;
+		//tmp_url = tmp_url.replace("{biblio_id}", bam.bib_id);
+		for (i in bam.barcodes){
+			let req_in = {
+				"barcode":bam.barcodes[i],
+				"biblionumber":bam.bib_id,
+				"csrf_token": bam.csrf,
+				
+				"op": "cud-moveitem"
+				};
+			console.log(req_in);
+		   
+		  fetch(tmp_url, {
+			  method: "POST", 
+			  headers: {"Content-Type": "application/json"},
+			  body: JSON.stringify(req_in),
+			})
+			.then(response => response.text())
+			.then(html => {
+				let tmp_out = bam.barcodes[i] + "Done! <br />"
+				bam.get("bam_rep").innerHTML += tmp_out;
+			})
+			.catch(error => console.error('Error POST: ' + i, error));
+		}
+	},
+	attach2: function (id_in) {
+	  // prep attach api
+	  bam.barcodes = bam.get("bam_bar").value.split("\n");
+	  bam.bib_id = bam.get("bam_bib").value;
+	  let tmp_url = "/cgi-bin/koha/cataloguing/moveitem.pl?biblionumber=" + bam.bib_id;
+	  let token = $('meta[name="csrf-token"]').attr('content');
+	  for (i in bam.barcodes){
+		  let req_in = {
+				"op": "cud-moveitem",
+				"barcode": bam.barcodes[i],
+				"biblionumber": bam.bib_id,
+				"csrf_token": token
+			  }
+		  let tmp_body = new FormData();
+		  for(j in req_in) {
+			  tmp_body.append(j, req_in[j]);
+		  }
+			  console.info(tmp_body);	  
+		
+		// Run ajax
+		fetch(tmp_url, {
+			url: tmp_url,
+			method: "POST", 
+			body : tmp_body,
+			csrf_token: token,
+		})
+		.then (res => {
+		  if (!res.ok) { 
+			alert("Error- See Console!");
+			console.error(res);
+			throw new Error ("Attach2 Not OK!"); 
+		  } else { 
+			let tmp_out = bam.barcodes[i] + "Done! <br />"
+			bam.get("bam_rep").innerHTML += tmp_out;
+		  }
+		})
+		.catch (error => console.error(error));
+	  }
+	}
+  };
+  window.onload = function() {
+	setTimeout(bam.init, 500);	
+  }
+</script>
+
+
+
+// #2 IntranetUserJS. Add this to your IntranetUserJS, replacing "{{page id here}}" with your page id:
+
+$(document).ready(function () {
+  if (location.href.indexOf("moveitem.pl") != -1) {
+			 console.log("batch attach");
+			let tmp = document.getElementsByClassName("action")[0].innerHTML;
+			 console.log(tmp);
+			let bib = location.href.split("biblionumber=")[1];
+			let batch = " <a href='/cgi-bin/koha/tools/page.pl?page_id={{page id here}}&bib_id=" + bib + "'> (Batch attach) </a>";
+			document.getElementsByClassName("action")[0].innerHTML = tmp + batch; 
+			console.log(tmp);
+	}
+});
