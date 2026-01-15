@@ -80,3 +80,10 @@ $(document).ready(function(){
       document.getElementsByClassName("deny")[0].type = "button";
   }
 });
+
+// add link to Koha Offline Library Tool
+$(document).ready(function(){
+if (location.href.indexOf("circulation-home.pl") != -1){
+  		$("#offline-circulation").append("<p><a href='https://github.com/orwek/kolt/blob/main/kolt.html' target='_blank'>&#9822; Get KOLT</a></p>");
+    }
+});
