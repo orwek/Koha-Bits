@@ -87,3 +87,111 @@ if (location.href.indexOf("circulation-home.pl") != -1){
   		$("#offline-circulation").append("<p><a href='https://github.com/orwek/kolt/blob/main/kolt.html' target='_blank'>&#9822; Get KOLT</a></p>");
     }
 });
+
+
+// Circ and Fine Column Filters
+// Written Jan 2026 for Koha 25.05
+const circ = {
+	on_off: 1, // 0= off, 1=on
+	simple: [1,2,5,6,7,9,10,22,23,25,26,27,36], // col #s
+	checkout: [1,2,5,6,7,8,9,10,11,15,36],
+	fine: [1,2,7,12,13,14,15,16,17,18,35,36],
+	renew: [1,2,22,23,24,25,26,27,28,36],
+	holds: [1,2,29,30,31,32,33,34,35,36],
+	status: "all",
+	gen_btns: function () {
+		// buttons code
+		let tmp = "";
+		tmp += "<a class='btn btn-primary btn-success' id='all' style='cursor: pointer;' onclick='circ.hide(\"all\")'>All</a> ";
+		tmp += "<a class='btn btn-primary' id='simple' style='cursor: pointer;' onclick='circ.hide(\"simple\")'>Simple</a> ";
+		tmp += "<a class='btn btn-primary' id='checkout' style='cursor: pointer;' onclick='circ.hide(\"checkout\")'>Checkouts</a> ";
+		tmp += "<a class='btn btn-primary' id='holds' style='cursor: pointer;' onclick='circ.hide(\"holds\")'>Holds</a> ";
+		tmp += "<a class='btn btn-primary' id='fine' style='cursor: pointer;' onclick='circ.hide(\"fine\")'>Fines</a> ";
+		tmp += "<a class='btn btn-primary' id='renew' style='cursor: pointer;' onclick='circ.hide(\"renew\")'>Renewals</a>";
+		// add in the appropriate place
+		$('<div id="showhideContainer">' + tmp +'</div>').insertBefore($('#default-circulation-rules'));
+	},
+	set_colors: function () {
+		// Set custom colors for table headers
+		setInterval(function () {
+		  $('#default-circulation-rules th').css({"background-color":"#408540","color":"white"});
+		},300);
+    },
+    hide: function (x_in) {
+		circ.status = x_in;
+		if (x_in == "all"){
+			$("#default-circulation-rules td").show();
+			$("#default-circulation-rules th").show();
+			$("#showhideContainer a").removeClass("btn-success");
+			$("#" + circ.status).addClass("btn-success");
+		} else {	
+			// hide all
+			$("#default-circulation-rules td").hide();
+			$("#default-circulation-rules th").hide();
+			$("#showhideContainer a").removeClass("btn-success");
+			setInterval( function () {$(".fixedHeader-floating").hide();}, 500);
+			// show these
+			for (i = 0; i < circ[x_in].length; i += 1){
+				// show the columns listed in the above arrays
+				circ.show(circ[x_in][i]);
+			}
+		}
+	},
+	show: function (y_in) {
+		console.log(y_in);
+		$("#default-circulation-rules thead th:nth-child(" + y_in +")").show();
+		$("#default-circulation-rules tfoot th:nth-child(" + y_in +")").show();
+		$("#default-circulation-rules tr td:nth-child(" + y_in +")").show();
+		$("#" + circ.status).addClass("btn-success");
+	}
+}; 
+$(document).ready(function() {
+	if (location.href.indexOf("smart-rules.pl") != -1 && circ.on_off == 1) {
+		circ.gen_btns();
+		circ.set_colors();
+	}
+});
+
+/* *
+ * Column numbers:
+ * 
+ * Patron Cat 1
+ * item type 2
+ * Actions 3
+ * Note 4
+ * curr checkouts 5
+ * curr onsite checkcouts 6
+ * loan period 7 
+ * days mode 8
+ * unit 9
+ * hard due date 10
+ * decreased loan period 11
+ * fine amount 12
+ * fine interval 13
+ * when to charge 14
+ * fine/suspension grace preiod 15
+ * overdue fines cap 16
+ * cap fine at replacement price 17
+ * expired hold charge 18
+ * suspension in days 19
+ * max suspension duration 20 
+ * suspension charge interval 21
+ * renewals allowed 22
+ * renewal period 23
+ * no renewal before 24 
+ * no auto renew before 25
+ * auto renew? 26
+ * No auto renew after 27
+ * no auto renew after hard 28
+ * holds allowed 29
+ * holds allowed daily 30
+ * holds pre record 31
+ * on shelf holds allowed 32
+ * opac item level hold 33
+ * hold pickup period 34
+ * rental discount % 35
+ * Actions 36
+ * 
+ * 
+ * */
+// End Circ and Fine Column Filters
