@@ -19,3 +19,4 @@ You can copy and paste each of these snippets individually into your IntranetUse
 - **Faster Fast Catalog:** Inserts the default entries for books on the "FA" Fast Catalog template and puts the cursor in the title field
 - **Holds Ignore Bug:** Occassionally the Ignore button on the Holds Dialoge won't let you ignore, this fixes it.
 - **Koha Offline Library Tool Link:** Adds a link to my one page offline library tool to the footer with the other offline tools.
+- **Circ and Fine Filters:** Adds column filters to the circ and fine screen to make managing rules easier
