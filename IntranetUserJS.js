@@ -88,6 +88,40 @@ if (location.href.indexOf("circulation-home.pl") != -1){
     }
 });
 
+// Move hold, item barcode lookup
+// Written Mar 2026 for Koha 25.11
+$(document).ready(function(){
+    let hold_status = 1;
+    let hold_item_id = 0;
+   
+	let hold_move = () => {
+      
+      if (hold_item_id == 0) {
+        let tmp_id = $("#biblio_id").val();
+        if (tmp_id != "") {
+          hold_item_id = tmp_id; 
+          hold_status = 0;
+        }
+      }
+      if (hold_status == 0) {
+     // fetch biblio id on change
+     let tmp_url = "/api/v1/items?external_id=" + hold_item_id;
+     fetch(tmp_url, {method: "GET"})
+      .then (res => {
+          if (!res.ok) { throw new Error ("hold_fetch Not OK!"); }
+            return res.json();
+          })
+      .then (data => {
+        //put bib_id in other field
+          $("#biblio_id").val(data[0].biblio_id);
+      })
+        .catch(error => console.error('Error hold_fetch: ', error));
+      }
+   }
+	setInterval(hold_move, 1000);
+});
+
+
 
 // Circ and Fine Column Filters
 // Written Jan 2026 for Koha 25.05
